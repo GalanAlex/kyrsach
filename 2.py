@@ -36,7 +36,7 @@ class Ui_MainWindow(QWidget):
         self.horizontalSlider.setOrientation(QtCore.Qt.Horizontal)
         self.horizontalSlider.setObjectName("horizontalSlider")
         self.horizontalSlider.setMinimum(0)
-        self.horizontalSlider.setMaximum(cgs.J)
+        self.horizontalSlider.setMaximum(cgs.J-1)
         self.horizontalSlider.setValue(0)
         self.gridLayout_3.addWidget(self.horizontalSlider, 0, 0, 1, 1)
         self.horizontalSlider.valueChanged.connect(self.valuechange_z)
@@ -45,7 +45,7 @@ class Ui_MainWindow(QWidget):
         self.horizontalSlider_2.setOrientation(QtCore.Qt.Horizontal)
         self.horizontalSlider_2.setObjectName("horizontalSlider_2")
         self.horizontalSlider_2.setMinimum(0)
-        self.horizontalSlider_2.setMaximum(cgs.K)
+        self.horizontalSlider_2.setMaximum(cgs.K-1)
         self.horizontalSlider_2.setValue(0)
         self.gridLayout_3.addWidget(self.horizontalSlider_2, 2, 0, 1, 1)
         self.horizontalSlider_2.valueChanged.connect(self.valuechange_y)
@@ -286,12 +286,12 @@ class Ui_MainWindow(QWidget):
     def valuechange_z(self):
         CustomWidget1.z = self.horizontalSlider.value()
         self.label_12.setText("Z for first graph: {:.2f}s".format(
-            4*self.horizontalSlider.value() / 100))  # UPD: показывает значение слайдера
+            4*self.horizontalSlider.value() / cgs.K))  # UPD: показывает значение слайдера
 
     def valuechange_y(self):
         CustomWidget2.y = self.horizontalSlider_2.value()
         self.label_13.setText("Y for second graph: {:.2f}mcm".format(
-            6*self.horizontalSlider_2.value() / 100))
+            6*self.horizontalSlider_2.value() / cgs.J))
 
     def valuechange_Ly(self):
         slv.Ly = self.doubleSpinBox.value()

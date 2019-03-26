@@ -13,7 +13,7 @@ Ly = 6
 L = 4
 lambd = 2
 n = 1
-z = 4
+z = 1
 x = 1
 
 y = 3
@@ -34,15 +34,15 @@ l=np.zeros((J,K))
 def cons():
     return((np.pi**2)/(Lx**2))
 def psi(j,h):
-    return np.exp(-((j*h-Ly/2)/0.1*Ly)**2)
+    return np.exp(-(((j*h-Ly/2)/(0.1*Ly))**2))
 
 def mainsolve(J,K):
     
     V = np.zeros((J, K))
 
     if MODE == 'c': 
-        h = y/J #Hy
-        tau = z/K #Hz
+        h = Ly/J #Hy
+        tau = L/K #Hz
         betta = alpha/2
 
         a = abs(1 - tau*alpha - ((2*betta*tau)/(h**2)))
@@ -52,8 +52,8 @@ def mainsolve(J,K):
         j=0
         while j< J-1:
             V[j,0]=psi(j,h)
-            #print(V[j,0])
             j=j+1
+        print(V[:,0])
 
         balpha[0] = -b / a
         balpha[1] = b / (b * balpha[0] + a)
@@ -188,8 +188,8 @@ def mainsolve(J,K):
 
 
     if MODE == 'o':
-        h = y / J
-        tau = z / K
+        h = Ly / J
+        tau = L / K
 
         j = 0
         while j <= J-1:
@@ -202,8 +202,8 @@ def mainsolve(J,K):
             V[J-1, k + 1] = 0
             j = 1
             while j < J-1:
-                V[j,k+1] = abs(alpha*tau*((np.pi**2)/(Lx**2))*V[j,k] - alpha*tau*(V[j+1,k] - 2*V[j,k] + V[j-1, k])/(h**2) + V[j,k])
-                print(V[j,k+1])
+                V[j,k+1] = abs(alpha*tau*((np.pi**2)/(Lx**2))*V[j,k] - (alpha*tau*(V[j+1,k] - 2*V[j,k] + V[j-1, k]))/(h**2) + V[j,k])
+                #print(V[j,k+1])
                 j = j+1
             k = k+1
 
@@ -211,8 +211,8 @@ def mainsolve(J,K):
 
     if MODE == 'im':
 
-        h = y / J  # Hy
-        tau = z / K  # Hz
+        h = Ly / J  # Hy
+        tau = L / K  # Hz
         #mu = alpha * tau/(h**2)
         #print(mu)
         beta = tau*alpha * ((np.pi**2)/(Lx**2))
@@ -234,7 +234,7 @@ def mainsolve(J,K):
         j = 0
         while j < J - 1:
             V[j, 0] = psi(j, h)
-            # print(V[j,0])
+            #print(V[j,0])
             j = j + 1
 
         balpha[0] = -b / a
@@ -265,13 +265,8 @@ def mainsolve(J,K):
                 m = m - 1
             V[1,kk+1] = balpha[0]*V[2,kk+1]+l[0,kk]
             kk = kk + 1
-        u=2
-        while u < 3:
-            print("Интерация ",u,"для k  ",p[u,1]," бета - ",l[u,1])
-            print("Интерация ",u,"для k+1 ",p[u,2]," бета - ",l[u,2])
-            u = u + 1
 
-        print(V)
+
 
         '''
         j = 0
